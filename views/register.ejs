@@ -1,0 +1,124 @@
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      /* background-color: #f0f0f0; Light gray background */
+      background: linear-gradient(to right, #f7f7f7, #dcdcdc);
+    }
+  
+    h1 {
+      text-align: center;
+      font-size: 2em; /* Increase heading size */
+      margin-bottom: 20px; /* Add spacing after heading */
+      color: #333; /* Dark gray for heading */
+    }
+  
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 350px; /* Adjust form width */
+      margin: 0 auto; /* Center the form horizontally */
+      background-color: #fff; /* White background for the form */
+      border-radius: 5px; /* Add rounded corners */
+      padding: 20px; /* Add some padding within the form */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+      animation: form-appear 1s ease-in-out forwards; /* Add animation on form load */
+    }
+  
+    @keyframes form-appear {
+      from {
+        opacity: 0; /* Form initially invisible */
+        transform: translateY(20px); /* Form slides down from top */
+      }
+      to {
+        opacity: 1; /* Form becomes fully visible */
+        transform: translateY(0); /* Form slides down to its position */
+      }
+    }
+  
+    label {
+      display: block; /* Display labels on separate lines */
+      margin-bottom: 5px; /* Add space after labels */
+      font-weight: bold; /* Make labels slightly bolder */
+    }
+  
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="file"] {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 100%;
+      transition: all 0.2s ease-in-out; /* Add smooth transitions on hover */
+    }
+  
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    input[type="file"]:focus {
+      border-color: #007bff; /* Blue border on focus */
+      outline: none; /* Remove default focus outline */
+    }
+  
+    input[type="submit"] {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+  
+    input[type="submit"]:hover {
+      background-color: #0069d9; /* Darker blue on hover */
+    }
+  
+    .success-message {
+      color: green;
+      text-align: center;
+      margin-top: 10px; /* Add space after successful registration message */
+      animation: message-appear 0.5s ease-in-out forwards; /* Add animation */
+    }
+  
+    @keyframes message-appear {
+      from {
+        opacity: 0; /* Message initially invisible */
+        transform: translateY(10px); /* Message slides down from top */
+      }
+      to {
+        opacity: 1; /* Message becomes fully visible */
+        transform: translateY(0); /* Message slides down to its position */
+      }
+    }
+  </style>
+  
+
+
+<h1>Register</h1>
+<form action="" method="post" enctype="multipart/form-data">
+
+    <input type="text" name="name" placeholder="enter name.. " required>
+    <br><br>
+    <input type="email" name="email" placeholder="enter email" required>
+    <br><br>
+    <input type="file" name="image" placeholder="upload img" required>
+    <br><br>
+    <input type="password" name="password" placeholder="enter password" required>
+    <br><br>
+
+    <input type="submit" value="Register">
+    
+
+</form>
+
+<% 
+if(typeof message !== 'undefined'){
+    %>
+    <p style="color: green;"><%= message %></p>
+    <%
+}
+%>

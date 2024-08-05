@@ -1,0 +1,100 @@
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-image: url("https://www.shutterstock.com/image-vector/seamless-pattern-outline-icons-seo-600nw-659141167.jpg"); /* Replace with your image path */
+      background-repeat: no-repeat;
+      background-position: top center; /* Position image at the top center */
+      background-size: cover; /* Cover the entire background area */
+    }
+  
+    h1 {
+      text-align: center; /* Center the title */
+      color: #007bff; /* Blue for the title */
+    }
+  
+    .error-message {
+      color: rgb(236, 42, 8); /* Red color for error messages (unchanged) */
+      margin-bottom: 10px; /* Add spacing after error messages */
+    }
+  
+    form {
+      display: flex; /* Center the form elements horizontally */
+      flex-direction: column; /* Stack form elements vertically */
+      align-items: center; /* Align elements to the center */
+      width: 300px; /* Set a fixed width for the form */
+      margin: 0 auto; /* Center the form horizontally */
+      background-color: #fff; /* White background for the form itself */
+      border-radius: 5px; /* Add a subtle rounded border for the form */
+      padding: 20px; /* Add some padding within the form */
+    }
+  
+    /* Option 1: Complementary Color Scheme (Visually Appealing) */
+    form {
+      background-color: #e0e0f0; /* Light blue background for the form */ /* Option 1 */
+    }
+  
+    /* Option 2: Tonal Color Scheme (Subtle & Consistent) */
+    /* No change to form background color (#fff remains) for Option 2 */
+  
+    input[type="email"],
+    input[type="password"] {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px; /* Add rounded corners for better aesthetics */
+      margin-bottom: 10px; /* Add spacing between input fields */
+      width: 100%;
+  
+      /* Option 1: Match form background color for a unified look */
+      background-color: #e0e0f0; /* Option 1 */
+  
+      /* Option 2: Slightly lighter background for input fields */
+      /* background-color: #eee;  (Uncomment for Option 2) */
+      color: #333; /* Dark gray for input field text */
+    }
+  
+    input[type="email"]:hover,
+    input[type="password"]:hover {
+      background-color: #d6d6e0; /* Slightly lighter gray on hover (Option 1 & 2) */
+    }
+  
+    input[type="submit"] {
+      background-color: #007bff; /* Blue background for submit button (unchanged) */
+      color: white; /* White text for submit button (unchanged) */
+      padding: 10px 20px; /* Adjust padding for a better button size */
+      border: none;
+      border-radius: 4px; /* Consistent rounded corners */
+      cursor: pointer; /* Indicate clickable behavior */
+    }
+  
+    input[type="submit"]:hover {
+      background-color: #0069d9; /* Darker blue on hover for a button effect (unchanged) */
+    }
+  </style>
+  
+  
+  
+
+<h1>Log In Page</h1>
+
+<% 
+if(typeof message !== 'undefined'){
+    %>
+    <h4 style="color: rgb(236, 42, 8);"><%= message %></h4>
+    <%
+}
+%>
+
+<form action="" method="post">
+
+    <input type="email" name="email" placeholder="Enter your email..." required>
+    <br><br>
+    
+    <input type="password" name="password" placeholder="Enter your password..." required>
+    <br><br>
+
+    <input type="submit" value="Login">
+
+
+</form>
