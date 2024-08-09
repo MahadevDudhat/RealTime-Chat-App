@@ -8350,3 +8350,25 @@ a[data-toggle="collapse"] {
   .chat-section{
     display: none;
   }
+
+  .online-status{
+    color:green;
+  }
+  .Ofline-status{
+    color:red;
+  }
+  #chat-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .current-user-chat{
+    align-self: flex-end;
+    margin:10px;
+    
+  }
+
+  .distance-user-chat{
+    align-self: flex-start;
+    margin:10px;
+  }

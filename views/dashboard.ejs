@@ -11,11 +11,32 @@
                 if(users.length > 0){
                     for(let i=0;i<users.length;i++){
                         %>
-                        <li class="list-group-item list-group-item-primary cursor-pointer user-list">
+                        <li class="list-group-item list-group-item-primary cursor-pointer user-list" data-id="<%= users[i]['_id'] %>">
                             <img src="<%='http://localhost:3000/'+users[i]['image'] %>" alt="" 
                             width="50px" height="50px"
                             style="border-radius: 50%;">
-                            <%= users[i]['name']%>    
+                            <%= users[i]['name']%>  
+                            
+                            <%
+                            if(users[i]['is_online']=='1'){
+
+                                %>
+                                
+                                <sup class="online-status" id="users[i]['_id']-status">Online</sup>
+                                
+                                <%
+
+                            }else{
+                                %>
+                                
+                                <sup class="Ofline-status" id="users[i]['_id']-status">Ofline</sup>
+                                
+                                <%
+                            }
+                            
+                            %>
+                            
+
                         </li>
                         <%
                     }
@@ -31,6 +52,12 @@
             
             <div id="chat-container">
 
+               
+                <div class="distance-user-chat">
+                    <h5>Hii</h5>
+                </div>
+
+
             </div>
             <form action="" id="chat-form">
                 <input type="text" placeholder="Enter your message.." id="message" name="message" class="border" required>    
@@ -45,13 +72,65 @@
 
 <script>
 
+    var sender_id = '<%= user._id %>';
+    var receiver_id;
+
+    var socket = io("/user-namespace",{
+        auth:{
+            token:sender_id
+        }
+    });
+
     $(document).ready(function(){
         $('.user-list').click(function(){
+
+            var userId = $(this).attr("data-id");
+            receiver_id = userId;
+
             $('.start-head').hide();
             $('.chat-section').show();
         })
     });
     
+    socket.on("getOnlineUser",function(data){
+        $('#'+data.user_id+'-status').text("online");
+        $('#'+data.user_id+'-status').removeClass("Ofline-status");
+        $('#'+data.user_id+'-status').addClass("online-status");
+    });
+
+    socket.on("getOfflineUser",function(data){
+        $('#'+data.user_id+'-status').text("ofline");
+        $('#'+data.user_id+'-status').removeClass("online-status");
+        $('#'+data.user_id+'-status').addClass("Ofline-status");
+    });
+
+    $("#chat-form").submit(function(e){
+        e.preventDefault();
+        var message = $("#message").val();
+       // $.ajax();
+        $.ajax({
+            url:"/save-chat",
+            type: "POST",
+            data:{sender_id:sender_id,receiver_id:receiver_id,message:message},
+            success:function(res){
+                if(res.success){
+                    $("#message").val('');
+                    let chat = res.data.message;
+                    console.log(chat);
+                    let chatHtml = `
+                     <div class="current-user-chat">
+                         <h5>`+chat+`</h5>
+                     </div>
+                    
+                    `;
+
+
+                }else{
+                    alert(data.msg);
+                }
+            }
+        });
+    });
 
 </script>
 

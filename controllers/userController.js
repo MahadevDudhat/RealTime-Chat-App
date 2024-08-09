@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const Chat = require("../models/chatModel");
 const bcrypt = require("bcrypt");
 
 
@@ -100,6 +101,23 @@ const loadDashboard = async(req,res)=>{
     }
 };
 
+const saveChat = async(req,res)=>{
+
+        try{
+
+            var chat  = new Chat({
+                sender_id:req.body.sender_id,
+                receiver_id:req.body.receiver_id,
+                message:req.body.message,
+            });
+            var chatMsg = await chat.save();
+            res.status(200).send({success:true,msg:"suceess",data:chatMsg});
+
+        }catch(error){
+            res.status(404).send({success:false, msg:error.message});
+        }
+}
+
 
 
 
@@ -109,5 +127,6 @@ module.exports = {
     loginLoad,
     login,
     logout,
-    loadDashboard
+    loadDashboard,
+    saveChat
 }
