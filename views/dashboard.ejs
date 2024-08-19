@@ -51,11 +51,9 @@
         <div class="chat-section">
             
             <div id="chat-container">
-
+                
                
-                <div class="distance-user-chat">
-                    <h5>Hii</h5>
-                </div>
+                
 
 
             </div>
@@ -89,25 +87,26 @@
 
             $('.start-head').hide();
             $('.chat-section').show();
-        })
+            socket.emit("existChat",{sender_id:sender_id,receiver_id:receiver_id});
+        });
     });
     
-    socket.on("getOnlineUser",function(data){
-        $('#'+data.user_id+'-status').text("online");
-        $('#'+data.user_id+'-status').removeClass("Ofline-status");
-        $('#'+data.user_id+'-status').addClass("online-status");
+    socket.on("getOnlineUser",async function(data){
+        await $('#'+data.user_id+'-status').text("online")
+        .removeClass("Ofline-status")
+        .addClass("online-status");
     });
 
-    socket.on("getOfflineUser",function(data){
-        $('#'+data.user_id+'-status').text("ofline");
-        $('#'+data.user_id+'-status').removeClass("online-status");
-        $('#'+data.user_id+'-status').addClass("Ofline-status");
+    socket.on("getOfflineUser",async function(data){
+       await $('#'+data.user_id+'-status').text("ofline")
+        .removeClass("online-status")
+       .addClass("Ofline-status");
     });
 
     $("#chat-form").submit(function(e){
         e.preventDefault();
         var message = $("#message").val();
-       // $.ajax();
+       
         $.ajax({
             url:"/save-chat",
             type: "POST",
@@ -124,6 +123,9 @@
                     
                     `;
 
+                    $('#chat-container').append(chatHtml);
+                     socket.emit("newChat",res.data);
+                     scrollChat();
 
                 }else{
                     alert(data.msg);
@@ -131,6 +133,55 @@
             }
         });
     });
+
+    socket.on("loadNewChat",function(data){
+        if(sender_id == data.receiver_id && receiver_id == data.sender_id){
+            let chatHtml = `
+                     <div class="distance-user-chat">
+                         <h5>`+data.message+`</h5>
+                     </div>
+                    
+                    `;
+
+                    $('#chat-container').append(chatHtml);
+                     socket.emit("newChat",res.data);
+        }
+        scrollChat();
+   
+
+    }); 
+
+    //catching loadChats events to load the new chat-section
+    socket.on("loadChats",function(data){
+        $("#chat-container").html('');
+        var chats = data.chats;
+        let html = '';
+        for(let i=0;i<chats.length;i++){
+            addClass = '';
+            if(chats[i]['sender_id']==sender_id){
+                addClass = "current-user-chat";
+            }else{
+                addClass = "distance-user-chat";
+            }
+
+            html+=`
+                     <div class='`+addClass+`'>
+                         <h5>`+chats[i]['message']+`</h5>
+                     </div>
+                    
+                    `;
+        }
+
+        $("#chat-container").append(html);
+        scrollChat();
+    });
+
+    function scrollChat(){
+        $("#chat-container").animate({
+            scrollTop:$("#chat-container").offset().top+$("#chat-container")[0].scrollHeight
+        },0);
+    }
+
 
 </script>
 
